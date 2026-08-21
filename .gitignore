@@ -1,0 +1,28 @@
+# ── 1. 全てを除外 ─────────────────────────────────────────────
+#  bin/ obj/ publish/ .vs/ .idea/ .claude/ などもここで除外される
+*
+
+# ── 2. ルート直下で追跡するファイル ───────────────────────────
+!/.gitignore
+!/LICENSE
+!/README.md
+!/CONTRIBUTING.md
+!/SECURITY.md
+!/publish.bat
+!/VISTASystem.sln
+!/VISTASystem.csproj
+
+# ── 3. ソースコード（src/ 配下は何階層でも追跡する） ──────────
+!/src/
+!/src/**/
+!/src/**/*.cs
+
+# ── 4. 発行プロファイル ───────────────────────────────────────
+!/Properties/
+!/Properties/PublishProfiles/
+!/Properties/PublishProfiles/*.pubxml
+
+# ── 5. GitHub Actions ─────────────────────────────────────────
+!/.github/
+!/.github/workflows/
+!/.github/workflows/*.yml
