@@ -1,0 +1,34 @@
+name: release
+
+# v から始まるタグ（例: v1.3.0）を push すると、
+# 単一 EXE をビルドして Release を作成し、成果物として添付する。
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # Release の作成に必要
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish (self-contained single file)
+        run: dotnet publish VISTASystem.csproj -p:PublishProfile=Release
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create ${{ github.ref_name }}
+          publish/VISTASystem.exe
+          --title ${{ github.ref_name }}
+          --generate-notes
